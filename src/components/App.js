@@ -9,6 +9,8 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import DeleteCardPopup from './DeleteCardPopup';
+import { Route, Switch, withRouter } from 'react-router-dom';
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   // Перменные состояния попапов
@@ -23,6 +25,7 @@ function App() {
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({});
   const [isDataLoad, setIsDataLoad] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   useEffect(() => {
     api.getFullData()
@@ -140,6 +143,20 @@ function App() {
         onCardLike = {handleCardLike}
         onCardDelete = {handleCardDeleteClick}
       />
+      <Switch>
+        <ProtectedRoute 
+          path='/'
+          onEditProfile = {handleEditProfileClick}
+          onAddPlace = {handleAddPlaceClick}
+          onEditAvatar = {handleEditAvatarClick}
+          onCardClick = {handleCardClick}
+          cards = {cards}
+          onCardLike = {handleCardLike}
+          onCardDelete = {handleCardDeleteClick}
+          loggedIn = {loggedIn}
+          component = {Main}
+        />
+      </Switch>
       <Footer />
       <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} isDataLoad={isDataLoad}/>
       <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} isDataLoad={isDataLoad}/>
