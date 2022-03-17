@@ -56,3 +56,6 @@
 @import url(./blocks/popup/__figure/popup__figure.css);
 @import url(./blocks/popup/__input-error/popup__input-error.css);
 @import url(./blocks/popup/__confirm-button/_inactive/popup__confirm-button_inactive.css);
+@import url(./blocks/popup/__tooltip/popup__tooltip.css);
+@import url(./blocks/popup/__tooltip-image/popup__tooltip-image.css);
+@import url(./blocks/popup/__tooltip-text/popup__tooltip-text.css);
