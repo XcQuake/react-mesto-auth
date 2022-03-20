@@ -11,6 +11,9 @@ import AddPlacePopup from './AddPlacePopup';
 import DeleteCardPopup from './DeleteCardPopup';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
+import Register from './Register';
+import Login from './Login';
+import InfoTooltip from './InfoTooltip';
 
 function App() {
   // Перменные состояния попапов
@@ -25,7 +28,9 @@ function App() {
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({});
   const [isDataLoad, setIsDataLoad] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [authSuccess, setAuthSuccess] = useState(false);
+  const [email, setEmail] = useState('');
 
   useEffect(() => {
     api.getFullData()
@@ -52,6 +57,23 @@ function App() {
   function handleCardClick(card) {
     setSelectedCard(card);
     setIsImagePopupOpen(true);
+  }
+
+  // Функции аутентификации
+  function handleAuth(status) {
+    setIsTooltipPopupOpen(true);
+    setAuthSuccess(status);
+  }
+
+  function handleLogin(email) {
+    setEmail(email);
+    setLoggedIn(true);
+  }
+
+  function handleLogOut() {
+    setLoggedIn(false);
+    setEmail('');
+    localStorage.removeItem('jwt');
   }
 
   // Обновление информации о пользователе
@@ -144,8 +166,14 @@ function App() {
         onCardDelete = {handleCardDeleteClick}
       />
       <Switch>
+        <Route path='/sign-in'>
+          <Login onFailAuth={handleAuth} onSetLogin={handleLogin}/>
+        </Route>
+        <Route path='/sign-up'>
+          <Register onRegister={handleAuth}/>
+        </Route>
         <ProtectedRoute 
-          path='/'
+          exact path='/'
           onEditProfile = {handleEditProfileClick}
           onAddPlace = {handleAddPlaceClick}
           onEditAvatar = {handleEditAvatarClick}
