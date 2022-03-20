@@ -23,6 +23,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
+  const [isTooltipPopupOpen, setIsTooltipPopupOpen] = useState(false);
 
   // Переменные состояния карточек и информации о пользователе
   const [currentUser, setCurrentUser] = useState({name: 'Жак-Ив Кусто', about: 'Исследователь океана'});
@@ -152,7 +153,10 @@ function App() {
     setIsImagePopupOpen(false);
     setSelectedCard({});
     setIsDeleteCardPopupOpen(false);
+    setIsTooltipPopupOpen(false);
+    setAuthSuccess(false);
   }
+
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -192,6 +196,7 @@ function App() {
       <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} isDataLoad={isDataLoad}/>
       <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups} />
       <DeleteCardPopup card={selectedCard} isOpen={isDeleteCardPopupOpen} onClose={closeAllPopups} onDeleteCard={handleCardDelete} isDataLoad={isDataLoad}/>
+      <InfoTooltip isOpen={isTooltipPopupOpen} onClose={closeAllPopups} authSuccess={authSuccess}/>
     </CurrentUserContext.Provider>
   );
 };
