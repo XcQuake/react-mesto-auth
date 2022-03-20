@@ -14,6 +14,7 @@ import ProtectedRoute from './ProtectedRoute';
 import Register from './Register';
 import Login from './Login';
 import InfoTooltip from './InfoTooltip';
+import * as auth from '../utils/auth'
 
 function App() {
   // Перменные состояния попапов
