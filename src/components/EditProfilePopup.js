@@ -39,7 +39,7 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser, isDataL
   // Валидация форм
   const nameValid = useValidation(name, {minLength: 2, isEmpty: true});
   const descriptionValid = useValidation(description, {minLength: 2, isEmpty: true});
-  const buttonClassName = `button popup__confirm-button ${(!nameValid.validity || !descriptionValid.validity) && 'popup__confirm-button_inactive'}`
+  const buttonClassName = `button popup__confirm-button ${(!nameValid.validity || !descriptionValid.validity) && 'button_inactive'}`
 
   return (
     <PopupWithForm 
@@ -63,7 +63,7 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser, isDataL
           maxLength="40" 
           required 
         />
-        {(isTouched && nameValid.minLengthError) && <span className="popup__input-error link-error">{nameValid.errorMessage}</span>}
+        {(isTouched && nameValid.minLengthError) && <span className="input-error">{nameValid.errorMessage}</span>}
       </label>
       <label className="popup__field">
         <input 
@@ -79,7 +79,7 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser, isDataL
           maxLength="200" 
           required 
         />
-        {(isTouched && descriptionValid.minLengthError) && <span className="popup__input-error link-error">{descriptionValid.errorMessage}</span>}
+        {(isTouched && descriptionValid.minLengthError) && <span className="input-error">{descriptionValid.errorMessage}</span>}
       </label>
       <button className={buttonClassName} disabled={!nameValid.validity || !descriptionValid.validity} type="submit">
         {isDataLoad ? 'Сохранить...' : 'Сохранить'}

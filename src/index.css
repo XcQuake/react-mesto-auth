@@ -55,11 +55,13 @@
 @import url(./blocks/popup/__image-caption/popup__image-caption.css);
 @import url(./blocks/popup/__image-container/popup__image-container.css);
 @import url(./blocks/popup/__figure/popup__figure.css);
-@import url(./blocks/popup/__input-error/popup__input-error.css);
-@import url(./blocks/popup/__confirm-button/_inactive/popup__confirm-button_inactive.css);
 @import url(./blocks/popup/__tooltip/popup__tooltip.css);
 @import url(./blocks/popup/__tooltip-image/popup__tooltip-image.css);
-@import url(./blocks/popup/__tooltip-text/popup__tooltip-text.css);/* sign */
+@import url(./blocks/popup/__tooltip-image/_type/popup__tooltip-image_type_success.css);
+@import url(./blocks/popup/__tooltip-image/_type/popup__tooltip-image_type_error.css);
+@import url(./blocks/popup/__tooltip-text/popup__tooltip-text.css);
+
+/* sign */
 @import url(./blocks/sign/sign.css);
 @import url(./blocks/sign/__title/sign__title.css);
 @import url(./blocks/sign/__field/sign__field.css);

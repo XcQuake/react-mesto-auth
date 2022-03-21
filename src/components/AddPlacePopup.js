@@ -38,7 +38,7 @@ export default function AddPlacePopup({isOpen, onClose, onAddPlace, isDataLoad})
   // Валидация форм
   const linkValid = useValidation(link, {isEmpty: true, isUrl: true});
   const titleValid = useValidation(title, {minLength: 2, isEmpty: true});
-  const buttonClassName = `button popup__confirm-button ${(!linkValid.validity || !titleValid.validity) && 'popup__confirm-button_inactive'}`
+  const buttonClassName = `button popup__confirm-button ${(!linkValid.validity || !titleValid.validity) && 'button_inactive'}`
 
   return (
     <PopupWithForm 
@@ -62,7 +62,7 @@ export default function AddPlacePopup({isOpen, onClose, onAddPlace, isDataLoad})
           maxLength="30" 
           required 
         />
-        {(isTouched && titleValid.minLengthError) && <span className="popup__input-error link-error">{titleValid.errorMessage}</span>}
+        {(isTouched && !titleValid.validity) && <span className="input-error">{titleValid.errorMessage}</span>}
       </label>
       <label className="popup__field">
         <input 
@@ -77,7 +77,7 @@ export default function AddPlacePopup({isOpen, onClose, onAddPlace, isDataLoad})
           maxLength="250" 
           required 
         />
-        {(isTouched && linkValid.urlError) && <span className="popup__input-error link-error">{linkValid.errorMessage}</span>}
+        {(isTouched && !linkValid.validity) && <span className="input-error">{linkValid.errorMessage}</span>}
       </label>
       <button className={buttonClassName} disabled={!linkValid.validity || !titleValid.validity} type="submit">
         {isDataLoad ? 'Создать...' : 'Создать'}
@@ -85,4 +85,3 @@ export default function AddPlacePopup({isOpen, onClose, onAddPlace, isDataLoad})
     </PopupWithForm>
   )
 }
-
