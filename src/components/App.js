@@ -9,7 +9,7 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import DeleteCardPopup from './DeleteCardPopup';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import Register from './Register';
 import Login from './Login';
@@ -34,13 +34,17 @@ function App() {
   const [authSuccess, setAuthSuccess] = useState(false);
   const [email, setEmail] = useState('');
 
+  const history = useHistory();
+
   useEffect(() => {
     api.getFullData()
       .then(([user, cards]) => {
         setCurrentUser(user);
         setCards(cards);
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log(err));
+    
+    handleTokenCheck();
   }, []);
 
   // Функции открытия попапов
@@ -76,6 +80,21 @@ function App() {
     setLoggedIn(false);
     setEmail('');
     localStorage.removeItem('jwt');
+  }
+
+  function handleTokenCheck() {
+    if (localStorage.getItem('jwt')){
+      const jwt = localStorage.getItem('jwt');
+      auth.checkToken(jwt)
+        .then((data) => {
+          if(data.email){
+            setEmail(data.email);
+            setLoggedIn(true);
+            history.push('/')
+          }
+        })
+        .catch(err => console.log(err))
+    }
   }
 
   // Обновление информации о пользователе
