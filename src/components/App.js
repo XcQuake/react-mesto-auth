@@ -161,15 +161,6 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Header />
-      <Main 
-        onEditProfile = {handleEditProfileClick}
-        onAddPlace = {handleAddPlaceClick}
-        onEditAvatar = {handleEditAvatarClick}
-        onCardClick = {handleCardClick}
-        cards = {cards}
-        onCardLike = {handleCardLike}
-        onCardDelete = {handleCardDeleteClick}
-      />
       <Switch>
         <Route path='/sign-in'>
           <Login onFailAuth={handleAuth} onSetLogin={handleLogin}/>
