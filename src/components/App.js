@@ -179,7 +179,7 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header />
+      <Header loggedIn={loggedIn} email={email} onLogout={handleLogOut}/>
       <Switch>
         <Route path='/sign-in'>
           <Login onFailAuth={handleAuth} onSetLogin={handleLogin}/>
