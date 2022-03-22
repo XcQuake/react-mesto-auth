@@ -40,15 +40,17 @@ function App() {
   const history = useHistory();
 
   useEffect(() => {
-    api.getFullData()
+    if (isLoggedIn) {
+      api.getFullData()
       .then(([user, cards]) => {
         setCurrentUser(user);
         setCards(cards);
       })
       .catch(err => console.log(err));
+    }
     
     handleTokenCheck();
-  }, []);
+  }, [isLoggedIn]);
 
   // Функции открытия попапов
   function handleEditProfileClick() {
