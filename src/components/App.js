@@ -94,6 +94,18 @@ function App() {
       })
       .catch(err => console.log(err))
   }
+
+  function handleRegister(email, password) {
+    auth.register(email, password)
+      .then((res) => {
+        if (res.data) {
+          handleOpenTooltip(true);
+          history.push('/sign-in')
+        } else {
+          handleOpenTooltip(false);
+        }
+      })
+      .catch(err => console.log(err))
   }
 
   function handleTokenCheck() {
@@ -197,7 +209,7 @@ function App() {
           <Login onLogin={handleLogin}/>
         </Route>
         <Route path='/sign-up'>
-          <Register onRegister={handleAuthSubmit}/>
+          <Register onRegister={handleRegister}/>
         </Route>
         <ProtectedRoute 
           exact path='/'

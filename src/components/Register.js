@@ -26,15 +26,7 @@ export default function Register({onRegister}) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    auth.register(email, password)
-      .then((res) => {
-        if (res.data) {
-          onRegister(true);
-        } else {
-          onRegister(false);
-        }
-      })
-      .catch(err => console.log(err))
+    onRegister(email, password);
   }
 
   return (
