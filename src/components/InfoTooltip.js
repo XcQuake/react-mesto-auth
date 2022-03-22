@@ -1,17 +1,17 @@
 import { useHistory } from 'react-router-dom';
 
-export default function InfoTooltip({isOpen, onClose, authSuccess}) {
+export default function InfoTooltip({isOpen, onClose, isAuthSuccess}) {
   const popupClassName = (`popup popup_type_signup-status ${isOpen && 'popup_opened'}`);
   const history = useHistory();
   const imageClassName = (
-    `popup__tooltip-image ${authSuccess ? 'popup__tooltip-image_type_success' : 'popup__tooltip-image_type_error' }`
+    `popup__tooltip-image ${isAuthSuccess ? 'popup__tooltip-image_type_success' : 'popup__tooltip-image_type_error' }`
   );
   const statusText = (
-    `${authSuccess ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте ещё раз.'}`
+    `${isAuthSuccess ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте ещё раз.'}`
   );
   
   function handleClose() {
-    if (authSuccess) {
+    if (isAuthSuccess) {
       history.push('/sign-in');
       onClose();
     } else {

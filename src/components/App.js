@@ -33,8 +33,8 @@ function App() {
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({});
   const [isDataLoad, setIsDataLoad] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [authSuccess, setAuthSuccess] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAuthSuccess, setIsAuthSuccess] = useState(false);
   const [email, setEmail] = useState('');
 
   const history = useHistory();
@@ -69,18 +69,18 @@ function App() {
   }
 
   // Функции аутентификации
-  function handleAuth(status) {
+  function handleAuthSubmit(status) {
     setIsTooltipPopupOpen(true);
-    setAuthSuccess(status);
+    setIsAuthSuccess(status);
   }
 
   function handleLogin(email) {
     setEmail(email);
-    setLoggedIn(true);
+    setIsLoggedIn(true);
   }
 
   function handleLogout() {
-    setLoggedIn(false);
+    setIsLoggedIn(false);
     setEmail('');
     localStorage.removeItem('jwt');
   }
@@ -92,7 +92,7 @@ function App() {
         .then((data) => {
           if(data.email){
             setEmail(data.email);
-            setLoggedIn(true);
+            setIsLoggedIn(true);
             history.push('/')
           }
         })
@@ -103,7 +103,6 @@ function App() {
   // Обновление информации о пользователе
   function handleUpdateUser({name, about}) {
     setIsDataLoad(true);
-
     api.setUserInfo({name, about})
       .then((user) => {
         setCurrentUser(user);
@@ -115,7 +114,6 @@ function App() {
 
   function handleUpdateAvatar(avatar) {
     setIsDataLoad(true);
-
     api.setUserAvatar(avatar)
       .then((user) => {
         setCurrentUser(user);
@@ -127,7 +125,6 @@ function App() {
   // Манипуляции с карточкой
   function handleAddPlaceSubmit(newCard) {
     setIsDataLoad(true);
-
     api.addCard(newCard)
       .then((newCard) => {
         setCards([newCard, ...cards]);
@@ -158,14 +155,13 @@ function App() {
 
   function handleCardDelete(card) {
     setIsDataLoad(true);
-
     api.deleteCard(card._id)
       .then(() => {
         setCards((cards) => cards.filter(oldCard => oldCard._id !== card._id));
-        setIsDataLoad(false)
         closeAllPopups();
       })
       .catch(err => console.log(err))
+      .finally(() => setIsDataLoad(false))
   }
 
   function closeAllPopups() {
@@ -176,9 +172,8 @@ function App() {
     setSelectedCard({});
     setIsDeleteCardPopupOpen(false);
     setIsTooltipPopupOpen(false);
-    setAuthSuccess(false);
+    setIsAuthSuccess(false);
   }
-
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -188,10 +183,10 @@ function App() {
       </MenuContext.Provider>
       <Switch>
         <Route path='/sign-in'>
-          <Login onFailAuth={handleAuth} onSetLogin={handleLogin}/>
+          <Login onFailAuth={handleAuthSubmit} onSetLogin={handleLogin}/>
         </Route>
         <Route path='/sign-up'>
-          <Register onRegister={handleAuth}/>
+          <Register onRegister={handleAuthSubmit}/>
         </Route>
         <ProtectedRoute 
           exact path='/'
@@ -202,7 +197,7 @@ function App() {
           cards = {cards}
           onCardLike = {handleCardLike}
           onCardDelete = {handleCardDeleteClick}
-          loggedIn = {loggedIn}
+          isLoggedIn = {isLoggedIn}
           component = {Main}
         />
       </Switch>
@@ -212,7 +207,7 @@ function App() {
       <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} isDataLoad={isDataLoad}/>
       <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups} />
       <DeleteCardPopup card={selectedCard} isOpen={isDeleteCardPopupOpen} onClose={closeAllPopups} onDeleteCard={handleCardDelete} isDataLoad={isDataLoad}/>
-      <InfoTooltip isOpen={isTooltipPopupOpen} onClose={closeAllPopups} authSuccess={authSuccess}/>
+      <InfoTooltip isOpen={isTooltipPopupOpen} onClose={closeAllPopups} isAuthSuccess={isAuthSuccess}/>
     </CurrentUserContext.Provider>
   );
 };
