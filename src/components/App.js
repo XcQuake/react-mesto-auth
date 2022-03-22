@@ -80,6 +80,8 @@ function App() {
     setIsLoggedIn(false);
     setEmail('');
     localStorage.removeItem('jwt');
+    history.push('/sign-in');
+  }
 
   function handleLogin(email, password) {
     auth.authorize(email, password)
