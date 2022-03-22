@@ -65,7 +65,7 @@
 @import url(./blocks/popup/__tooltip/popup__tooltip.css);
 @import url(./blocks/popup/__tooltip-image/popup__tooltip-image.css);
 @import url(./blocks/popup/__tooltip-image/_type/popup__tooltip-image_type_success.css);
-@import url(./blocks/popup/__tooltip-image/_type/popup__tooltip-image_type_error.css);
+@import url(./blocks/popup/__tooltip-image/_type/popup__tooltip-image_type_fail.css);
 @import url(./blocks/popup/__tooltip-text/popup__tooltip-text.css);
 
 /* sign */

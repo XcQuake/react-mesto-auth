@@ -232,7 +232,13 @@ function App() {
       <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} isDataLoad={isDataLoad}/>
       <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups} />
       <DeleteCardPopup card={selectedCard} isOpen={isDeleteCardPopupOpen} onClose={closeAllPopups} onDeleteCard={handleCardDelete} isDataLoad={isDataLoad}/>
-      <InfoTooltip isOpen={isTooltipPopupOpen} onClose={closeAllPopups} isAuthSuccess={isAuthSuccess}/>
+      <InfoTooltip 
+        isOpen={isTooltipPopupOpen} 
+        onClose={closeAllPopups} 
+        isAuthSuccess={isAuthSuccess}
+        successText={'Вы успешно зарегистрировались!'}
+        failText={'Что-то пошло не так! Попробуйте ещё раз.'}
+      />
     </CurrentUserContext.Provider>
   );
 };
