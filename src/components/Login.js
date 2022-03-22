@@ -10,7 +10,7 @@ export default function Login({onFailAuth, onSetLogin}) {
   const history = useHistory();
 
   const emailValid = useValidation(email, {isEmail: true, isEmpty: true});
-  const passwordValid = useValidation(password, {minLength: 6, isEmpty: true});
+  const passwordValid = useValidation(password, {minLength: 6, isPassword: true, isEmpty: true});
   const buttonClassName = `button sign__button ${(!emailValid.validity || !passwordValid.validity) && 'button_inactive'}`
 
   function handleChangeEmail(e) {
