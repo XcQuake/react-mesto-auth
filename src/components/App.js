@@ -5,6 +5,7 @@ import Footer from './Footer';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { MenuContext } from '../contexts/MenuContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
@@ -15,6 +16,7 @@ import Register from './Register';
 import Login from './Login';
 import InfoTooltip from './InfoTooltip';
 import * as auth from '../utils/auth'
+import Menu from './Menu';
 
 function App() {
   // Перменные состояния попапов
@@ -24,6 +26,7 @@ function App() {
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
   const [isTooltipPopupOpen, setIsTooltipPopupOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Переменные состояния карточек и информации о пользователе
   const [currentUser, setCurrentUser] = useState({name: 'Жак-Ив Кусто', about: 'Исследователь океана'});
@@ -76,7 +79,7 @@ function App() {
     setLoggedIn(true);
   }
 
-  function handleLogOut() {
+  function handleLogout() {
     setLoggedIn(false);
     setEmail('');
     localStorage.removeItem('jwt');
@@ -179,7 +182,10 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header loggedIn={loggedIn} email={email} onLogout={handleLogOut}/>
+      <MenuContext.Provider value={{email: email, onLogout: handleLogout, isMenuOpen: isMenuOpen, setIsMenuOpen: setIsMenuOpen}}>
+        <Menu />
+        <Header />
+      </MenuContext.Provider>
       <Switch>
         <Route path='/sign-in'>
           <Login onFailAuth={handleAuth} onSetLogin={handleLogin}/>
