@@ -1,13 +1,10 @@
 import { useState } from 'react';
 import { useValidation } from '../hooks/useValidation';
-import { useHistory } from 'react-router-dom';
-import * as auth from '../utils/auth';
 
-export default function Login({onFailAuth, onSetLogin}) {
+export default function Login({onLogin}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isTouched, setIsTouched] = useState(false);
-  const history = useHistory();
 
   const emailValid = useValidation(email, {isEmail: true, isEmpty: true});
   const passwordValid = useValidation(password, {minLength: 6, isPassword: true, isEmpty: true});
@@ -27,18 +24,7 @@ export default function Login({onFailAuth, onSetLogin}) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    auth.authorize(email, password)
-      .then((data) => {
-        if (data){
-          setEmail('');
-          setPassword('');
-          onSetLogin(email);
-          history.push('/');
-        } else {
-          onFailAuth(false)
-        }
-      })
-      .catch(err => console.log(err))
+    onLogin(email, password);       
   }
 
   return (

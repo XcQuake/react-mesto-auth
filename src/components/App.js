@@ -71,20 +71,29 @@ function App() {
   }
 
   // Функции аутентификации
-  function handleAuthSubmit(status) {
+  function handleOpenTooltip(status) {
     setIsTooltipPopupOpen(true);
     setIsAuthSuccess(status);
-  }
-
-  function handleLogin(email) {
-    setEmail(email);
-    setIsLoggedIn(true);
   }
 
   function handleLogout() {
     setIsLoggedIn(false);
     setEmail('');
     localStorage.removeItem('jwt');
+
+  function handleLogin(email, password) {
+    auth.authorize(email, password)
+      .then((data) => {
+        if (data) {
+          setEmail(email);
+          setIsLoggedIn(true);
+          history.push('/sign-in');
+        } else {
+          handleOpenTooltip(false);
+        }
+      })
+      .catch(err => console.log(err))
+  }
   }
 
   function handleTokenCheck() {
@@ -185,7 +194,7 @@ function App() {
       </MenuContext.Provider>
       <Switch>
         <Route path='/sign-in'>
-          <Login onFailAuth={handleAuthSubmit} onSetLogin={handleLogin}/>
+          <Login onLogin={handleLogin}/>
         </Route>
         <Route path='/sign-up'>
           <Register onRegister={handleAuthSubmit}/>
